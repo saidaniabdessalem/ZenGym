@@ -1,0 +1,26 @@
+﻿<Project Sdk="Microsoft.NET.Sdk.Web">
+
+  <PropertyGroup>
+    <TargetFramework>netcoreapp3.1</TargetFramework>
+  </PropertyGroup>
+
+  <ItemGroup>
+    
+    <PackageReference Include="Microsoft.AspNetCore.Mvc.NewtonsoftJson" Version="3.1.9" />
+    
+    <PackageReference Include="Swashbuckle.AspNetCore" Version="5.6.3" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="3.1.9">
+       <PrivateAssets>all</PrivateAssets>
+       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+     </PackageReference>
+     
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\ZenGym.Domain\ZenGym.Domain.csproj" />
+    <ProjectReference Include="..\ZenGym.Persistence\ZenGym.Persistence.csproj" />
+    <ProjectReference Include="..\ZenGym.Application\ZenGym.Application.csproj" />
+  </ItemGroup>
+
+
+</Project>
