@@ -52,5 +52,6 @@ namespace ZenGym.Persistence
         public DbSet<Subscription> Subscriptions { get; set; }
         public DbSet<SubscriptionType> SubscriptionTypes { get; set; }
         public DbSet<Team> Teams { get; set; }
+        public DbSet<User> Users { get; set; }
     }
 }

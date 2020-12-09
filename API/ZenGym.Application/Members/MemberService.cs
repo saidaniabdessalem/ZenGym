@@ -9,25 +9,25 @@ namespace ZenGym.Application.Members
 {
     public class MemberService : IMemberService
     {
-        private readonly IMemberDataService _memberService;
+        private readonly IMemberDataService _memberDataService;
 
         public MemberService(IMemberDataService memberService)
         {
-            _memberService = memberService;
+            _memberDataService = memberService;
         }
 
         public async Task<Member> AddNewMember(Member member)
         {
             if (ValidateMemberDetails(member))
-                return await _memberService.CreateAsync(member);
-            throw new Exception("Invamid member details");
+                return await _memberDataService.CreateAsync(member);
+            throw new Exception("Invalid member details");
             
         }
 
         public async Task<Member> UpdateMemberDetails(int id, Member member)
         {
             if (ValidateMemberDetails(member))
-                return await _memberService.UpdateAsync(id, member);
+                return await _memberDataService.UpdateAsync(id, member);
             throw new Exception("Invamid member details");
         }
 

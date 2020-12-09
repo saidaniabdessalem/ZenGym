@@ -12,6 +12,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using Microsoft.OpenApi.Models;
+using Microsoft.AspNetCore.Authentication;
 using ZenGym.Application;
 using ZenGym.Application.Members;
 using ZenGym.Domain.Common;
@@ -20,6 +21,9 @@ using ZenGym.Domain.Services;
 using ZenGym.Persistence;
 using ZenGym.Persistence.DataServices;
 using ZenGym.Persistence.DataServices.Common;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.IdentityModel.Tokens;
+using System.Text;
 
 namespace ZenGym
 {
@@ -39,12 +43,26 @@ namespace ZenGym
         {
             services.AddDbContext<ZenGymDbContext>(options =>
                                                         options.UseSqlServer(Configuration.GetConnectionString("ZenGymDataBase")));
-
             services.AddPersistence(Configuration);
+
             services.AddApplication();
 
             services.AddControllers().AddNewtonsoftJson();
+            
             services.AddCors();
+
+            services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
+                .AddJwtBearer(options =>
+                {
+                    options.TokenValidationParameters = new TokenValidationParameters
+                    {
+                        ValidateIssuerSigningKey = true,
+                        IssuerSigningKey = new SymmetricSecurityKey(Encoding.ASCII.GetBytes(Configuration.GetSection("AppSettings:Token").Value)),
+                        ValidateIssuer = false,
+                        ValidateAudience = false
+                    };
+                });
+
 
             services.AddSwaggerGen(c =>
             {
@@ -70,9 +88,11 @@ namespace ZenGym
 
             app.UseRouting();
 
-            app.UseAuthorization();
-
             app.UseCors(x => x.AllowAnyOrigin().AllowAnyMethod().AllowAnyHeader());
+
+            app.UseAuthentication();
+
+            app.UseAuthorization();
 
             app.UseEndpoints(endpoints =>
             {

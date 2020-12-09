@@ -11,7 +11,7 @@ namespace ZenGym.Persistence.DataServices.Common
 {
     public class NonQueryDataService<T> where T : BaseEntity
     {
-        private readonly ZenGymDbContext _dbContext;
+        private ZenGymDbContext _dbContext;
 
         public NonQueryDataService(ZenGymDbContext dbContext)
         {
@@ -20,27 +20,25 @@ namespace ZenGym.Persistence.DataServices.Common
 
         public async Task<T> CreateAsync(T entity)
         {
-            using ZenGymDbContext context = _dbContext;
-            EntityEntry<T> createdResult = await context.Set<T>().AddAsync(entity);
-            await context.SaveChangesAsync();
+            EntityEntry<T> createdResult = await _dbContext.Set<T>().AddAsync(entity);
+            await _dbContext.SaveChangesAsync();
             return createdResult.Entity;
         }
 
         public async Task<T> UpdateAsync(int id, T entity)
         {
-            using ZenGymDbContext context = _dbContext;
+
             entity.Id = id;
-            context.Set<T>().Update(entity);
-            await context.SaveChangesAsync();
+            _dbContext.Set<T>().Update(entity);
+            await _dbContext.SaveChangesAsync();
             return entity;
         }
 
         public async Task<bool> DeleteAsync(int id)
         {
-            using ZenGymDbContext context = _dbContext;
-            T entity = await context.Set<T>().FirstOrDefaultAsync(e => e.Id == id);
-            context.Set<T>().Remove(entity);
-            await context.SaveChangesAsync();
+            T entity = await _dbContext.Set<T>().FirstOrDefaultAsync(e => e.Id == id);
+            _dbContext.Set<T>().Remove(entity);
+            await _dbContext.SaveChangesAsync();
             return true;
         }
     }

@@ -17,6 +17,12 @@ namespace ZenGym.Persistence
     {
         public static IServiceCollection AddPersistence(this IServiceCollection services, IConfiguration configuration)
         {
+            //User
+            //Team
+            services.AddScoped<NonQueryDataService<User>>();
+            services.AddScoped<IDataService<User>, UserDataService>();
+            services.AddScoped<IUserDataService, UserDataService>();
+
             //Team
             services.AddScoped<NonQueryDataService<Team>>();
             services.AddScoped<IDataService<Team>, TeamDataService>();

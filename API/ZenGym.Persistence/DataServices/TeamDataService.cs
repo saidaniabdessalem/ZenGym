@@ -32,15 +32,13 @@ namespace ZenGym.Persistence.DataServices
 
         public async Task<Team> GetAsync(int id)
         {
-            using ZenGymDbContext context = _dbContext;
-            Team team = await context.Teams.FirstOrDefaultAsync(e => e.Id == id);
+            Team team = await _dbContext.Teams.FirstOrDefaultAsync(e => e.Id == id);
             return team;
         }
 
         public async Task<List<Team>> GetAllAsync()
         {
-            using ZenGymDbContext context = _dbContext;
-            List<Team> teams = await context.Teams
+            List<Team> teams = await _dbContext.Teams
                                             .ToListAsync();
             return teams;
         }

@@ -40,15 +40,13 @@ namespace ZenGym.Persistence.DataServices
 
         public async Task<T> GetAsync(int id)
         {
-            using ZenGymDbContext context = _dbContext;
-            T entity = await context.Set<T>().FirstOrDefaultAsync(e => e.Id == id);
+            T entity = await _dbContext.Set<T>().FirstOrDefaultAsync(e => e.Id == id);
             return entity;
         }
 
         public async Task<List<T>> GetAllAsync()
         {
-            using ZenGymDbContext context = _dbContext;
-            List<T> entities = await context.Set<T>().ToListAsync();
+            List<T> entities = await _dbContext.Set<T>().ToListAsync();
             return entities;
         }
 

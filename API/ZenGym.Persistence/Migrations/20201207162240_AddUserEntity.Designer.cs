@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using ZenGym.Persistence;
 
 namespace ZenGym.Persistence.Migrations
 {
     [DbContext(typeof(ZenGymDbContext))]
-    partial class ZenGymDbContextModelSnapshot : ModelSnapshot
+    [Migration("20201207162240_AddUserEntity")]
+    partial class AddUserEntity
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -165,7 +167,7 @@ namespace ZenGym.Persistence.Migrations
                     b.Property<DateTime>("EntryTime")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("datetime2")
-                        .HasDefaultValue(new DateTime(2020, 12, 7, 23, 9, 47, 513, DateTimeKind.Local).AddTicks(2050));
+                        .HasDefaultValue(new DateTime(2020, 12, 7, 17, 22, 40, 582, DateTimeKind.Local).AddTicks(2636));
 
                     b.Property<DateTime>("ExitTime")
                         .HasColumnType("datetime2");
@@ -357,9 +359,6 @@ namespace ZenGym.Persistence.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<DateTime>("CreationDate")
-                        .HasColumnType("datetime2");
 
                     b.Property<byte[]>("PasswordHash")
                         .HasColumnType("varbinary(max)");

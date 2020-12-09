@@ -39,8 +39,7 @@ namespace ZenGym.Persistence.DataServices
 
         public async Task<Member> GetAsync(int id)
         {
-            using ZenGymDbContext context = _dbContext;
-            Member member = await context.Members
+            Member member = await _dbContext.Members
                                             .Include(t => t.Team)
                                             .FirstOrDefaultAsync(e => e.Id == id);
             return member;
@@ -48,8 +47,7 @@ namespace ZenGym.Persistence.DataServices
 
         public async Task<List<Member>> GetAllAsync()
         {
-            using ZenGymDbContext context = _dbContext;
-            List<Member> members = await context.Members
+            List<Member> members = await _dbContext.Members
                                                 .Include(t => t.Team)
                                                 .ToListAsync();
             return members;
