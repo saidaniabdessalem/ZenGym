@@ -22,12 +22,13 @@ namespace ZenGym.API.Controllers
             _dataService = dataService;
         }
 
-        
+
         //GET /api/team
+        [AllowAnonymous]
         [HttpGet]
         public async Task<IActionResult> GetAllAsync()
         {
-            var teams =  await _dataService.GetAllAsync();
+            var teams = await _dataService.GetAllAsync();
             return Ok(teams);
         }
 

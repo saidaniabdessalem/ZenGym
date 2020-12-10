@@ -49,7 +49,7 @@ namespace ZenGym.API.Controllers
         [HttpPost("login")]
         public async Task<IActionResult> Login(UserForLoginDto userForLoginDto)
         {
-            User user = await _authService.Login(userForLoginDto.Username.ToLower(), userForLoginDto.Password);
+            var user = await _authService.Login(userForLoginDto.Username.ToLower(), userForLoginDto.Password);
 
             if (user == null)
                 return Unauthorized();
@@ -58,9 +58,6 @@ namespace ZenGym.API.Controllers
             var token = CommonSecurity.GenerateJwtToken(user, tokenSettings);
 
             return Ok(new { token });
-
-
-
         }
 
         
