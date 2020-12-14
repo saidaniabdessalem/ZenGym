@@ -49,17 +49,25 @@ namespace ZenGym.API.Controllers
         [HttpPost("login")]
         public async Task<IActionResult> Login(UserForLoginDto userForLoginDto)
         {
-            var user = await _authService.Login(userForLoginDto.Username.ToLower(), userForLoginDto.Password);
+            try
+            {
+                var user = await _authService.Login(userForLoginDto.Username.ToLower(), userForLoginDto.Password);
 
-            if (user == null)
-                return Unauthorized();
+                if (user == null)
+                    return Unauthorized();
 
-            var tokenSettings = _config.GetSection("AppSettings:Token").Value;
-            var token = CommonSecurity.GenerateJwtToken(user, tokenSettings);
+                var tokenSettings = _config.GetSection("AppSettings:Token").Value;
+                var token = CommonSecurity.GenerateJwtToken(user, tokenSettings);
 
-            return Ok(new { token });
+                return Ok(new { token });
+            }
+            catch (Exception Ex)
+            {
+                return StatusCode(500, "System Says No !");
+            }
+
         }
 
-        
+
     }
 }
